@@ -54,7 +54,7 @@ comme etant le nombre 42:
 
 Pour changer la valeur d'une variable, on utilise le mot `est`, exemple
 le code suivant fait suite au precedent, et etablit que `reponse` vaut
-un autre nombre super connu `1337`:
+un autre nombre hyper connu `1337`:
 
 ```scheme
 (est reponse 1337)
