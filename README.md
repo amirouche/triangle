@@ -28,7 +28,7 @@ Les guillemets droits delimitent les chaines de caracteres. Les
 parentheses delimitent les listes. Les retours a la ligne sont traites
 comme les espaces pour delimiter les elements d'une liste.
 
-Une expression est une liste, donc une suite d'elements delimites par 
+Une expression est une liste, donc une suite d'elements delimites par
 une paire de parentheses, peux contenir:
 
 - un nombre
@@ -36,7 +36,7 @@ une paire de parentheses, peux contenir:
 - un symbole
 - une liste
 
-Un symbole est definit comme n'etant ni un nombre, ni une chaine de 
+Un symbole est definit comme n'etant ni un nombre, ni une chaine de
 caracteres, c'est-a-dire que tous ce qui n'est pas nombre, ou chaine
 de caracteres forme un symbole. Remarquez qu'il n'y a jamais d'espace
 ou de retour a a ligne dans un symbole. Un symbole peut etre vue comme
@@ -52,15 +52,15 @@ comme etant le nombre 42:
 (ilya reponse 42)
 ```
 
-Pour changer la valeur d'une variable, on utilise le mot `est`, exemple 
-le code suivant fait suite au precedent, et etablit que `reponse` vaut 
-un autre nombre super hero `1337`:
+Pour changer la valeur d'une variable, on utilise le mot `est`, exemple
+le code suivant fait suite au precedent, et etablit que `reponse` vaut
+un autre nombre super connu `1337`:
 
 ```scheme
 (est reponse 1337)
 ```
 
-Il est possible de repeter cette derniere operation autant de fois que 
+Il est possible de repeter cette derniere operation autant de fois que
 necessaire, par exemple on peux associer `reponse` au nombre `2006`:
 
 ```scheme
@@ -68,7 +68,7 @@ necessaire, par exemple on peux associer `reponse` au nombre `2006`:
 ```
 
 Il existe des mots qui remplissent une fonctions tel que `chaine-attache`
-qui va creer une chaine a partir d'au moins deux chaines. Le code suivant 
+qui va creer une chaine a partir d'au moins deux chaines. Le code suivant
 s'evalue a la valeur "bonjour le monde":
 
 ```scheme
@@ -76,7 +76,7 @@ s'evalue a la valeur "bonjour le monde":
 ```
 
 Il est possible de definir des mots qui prennent en compte des variables
-passees par l'utilisateur, par exemple la fonction suivante `bonjour` va 
+passees par l'utilisateur, par exemple la fonction suivante `bonjour` va
 dire bonjour:
 
 ```scheme
