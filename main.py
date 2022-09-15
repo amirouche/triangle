@@ -33,7 +33,7 @@ def check():
                 sys.exit(2)
 
 
-def _check_ok():
+def _check_000():
     assert True
 
 
@@ -43,15 +43,12 @@ Expr = namedtuple('Expression', 'expr type annotation')
 
 
 def string2xchars(string):
-    offset = 0
     line = 0
     column = 0
-    while offset != len(string):
+    for offset, char in enumerate(string):
         char = string[offset]
 
         yield XChar(char, Annotation(offset, line, column))
-
-        offset += 1
 
         if char == '\n':
             line += 1
