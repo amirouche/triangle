@@ -11,7 +11,7 @@ def pk(*args):
 
 
 def ppk(*args):
-    pprint(";; {}".format(args), file=sys.stderr)
+    pprint(";; {}".format(args), stream=sys.stderr)
     return args[-1]
 
 
@@ -111,7 +111,13 @@ def _read_string(annotation, xchars):
     raise NotImplementedError()
 
 
-symbol = pk('symbol is object = ', object())
+class SYMBOL:
+
+    def __repr__(self):
+        return '#SYMBOL#'
+
+
+symbol = pk('symbol is object = ', SYMBOL())
 
 
 def _read_number_or_symbol(xchar, xchars):
@@ -229,6 +235,22 @@ def _check_008():
 
 
 PIPELINE = []
+
+
+def cps(expr):
+
+    def do(expr):
+        match expr:
+            case (head, *rest):
+                print(head)
+
+    match expr:
+        case (expr, type, a):
+            return tuple(do(x) for x in expr)
+
+
+
+PIPELINE.append(cps)
 
 
 def compile(expr, filename):
