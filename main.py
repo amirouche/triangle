@@ -6,16 +6,34 @@ from datetime import datetime
 
 
 def pk(*args):
-    print(args, sys.stderr)
+    print(";; {}".format(args), file=sys.stderr)
     return args[-1]
 
 
 def ppk(*args):
-    pprint(args, sys.stderr)
+    pprint(";; {}".format(args), file=sys.stderr)
     return args[-1]
 
 
-def check_ok():
+def check():
+    print("* Check check @ {} @ {}".format(__file__, datetime.now().isoformat()))
+    for key, object in globals().items():
+        if key.startswith('_check_'):
+            assert callable(object)
+            print("** Check: {}".format(key))
+            try:
+                object()
+            except AssertionError as exc:
+                print("*** AssertionError!")
+                traceback.print_exception(exc)
+                sys.exit(1)
+            except Exception as exc:
+                print("*** Exception...")
+                traceback.print_exception(exc)
+                sys.exit(2)
+
+
+def _check_ok():
     assert True
 
 
@@ -42,7 +60,7 @@ def string2xchars(string):
             column += 1
 
 
-def check_001():
+def _check_001():
     given = """a
 
 z"""
@@ -64,6 +82,7 @@ def inext(g):
         return next(g)
     except StopIteration:
         return None
+
 
 def read(string):
     xchars = string2xchars(string)
@@ -143,23 +162,23 @@ def _read(xchar, xchars):
                 return _read_number_or_symbol(xchar, xchars)
 
 
-def check_002():
+def _check_002():
     assert read("cosmit") == ("cosmit", symbol, (0, 0, 0))
 
 
-def check_003():
+def _check_003():
     assert read("2006") == (2006, int, (0, 0, 0))
 
 
-def check_004():
+def _check_004():
     assert read("3.1415") == (3.1415, float, (0, 0, 0))
 
 
-def check_005():
+def _check_005():
     assert read(""" "azul felawun" """) == ("azul felawun", str, (1, 0, 1))
 
 
-def check_006():
+def _check_006():
     input = """(hello
 world
 42
@@ -184,24 +203,6 @@ world
             assert False
 
 
-def check():
-    print("* Check check @ {} @ {}".format(__file__, datetime.now().isoformat()))
-    for key, object in globals().items():
-        if key.startswith('check_'):
-            assert callable(object)
-            print("** Check: {}".format(key))
-            try:
-                object()
-            except AssertionError as exc:
-                print("*** AssertionError!")
-                traceback.print_exception(exc)
-                sys.exit(1)
-            except Exception as exc:
-                print("*** Exception...")
-                traceback.print_exception(exc)
-                sys.exit(2)
-
-
 def write(expr):
     # XXX: pattern matching on types is difficult, possibly a scoping
     # issue.
@@ -220,14 +221,19 @@ def write(expr):
     raise NotImplementedError()
 
 
-def check_007():
+def _check_007():
     expected = """(azul 1337 "amirouche" 3.1415)"""
+    assert write(read(expected)) == expected
+
+
+def _check_008():
+    expected = """(azul (1337 "amirouche") 3.1415)"""
     assert write(read(expected)) == expected
 
 
 def main():
     match sys.argv[1:]:
-        case ['check', 'check']:
+        case ['check']:
             check()
 
 
