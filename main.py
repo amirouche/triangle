@@ -111,7 +111,7 @@ def _read_string(annotation, xchars):
     raise NotImplementedError()
 
 
-symbol = pk('symbol is object @ ', object())
+symbol = pk('symbol is object = ', object())
 
 
 def _read_number_or_symbol(xchar, xchars):
@@ -228,10 +228,32 @@ def _check_008():
     assert write(read(expected)) == expected
 
 
+PIPELINE = []
+
+
+def compile(expr, filename):
+    for step in PIPELINE:
+        expr = step(expr)
+    return expr
+
+
+def javascripter(expr):
+    return "console.log(42)"
+
+
 def main():
     match sys.argv[1:]:
         case ['check']:
             check()
+        case ['compile', filename]:
+            with open(filename) as f:
+                expr = read(f.read())
+            out = compile(expr, filename)
+            print(write(out), file=sys.stderr)
+            javascript = javascripter(out)
+            print("* javascript", file=sys.stderr)
+            print(javascript)
+
 
 
 if __name__ == "__main__":
